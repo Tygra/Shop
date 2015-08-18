@@ -25,7 +25,7 @@ using Wolfje.Plugins.SEconomy.Journal;
 
 namespace Shop
 {
-    [ApiVersion(1, 16)]
+    [ApiVersion(1, 21)]
     public class Shop : TerrariaPlugin
     {
         internal ShopData ShopList;
@@ -103,7 +103,7 @@ namespace Shop
                     break;
             }
             SqlTableCreator sqlcreator = new SqlTableCreator(Database, Database.GetSqlType() == SqlType.Sqlite ? (IQueryBuilder)new SqliteQueryCreator() : new MysqlQueryCreator());
-            sqlcreator.EnsureExists(new SqlTable("storeshop",
+            sqlcreator.EnsureTableStructure(new SqlTable("storeshop",
                 new SqlColumn("name", MySqlDbType.VarChar) { Primary = true, Length = 30 },
                 new SqlColumn("price", MySqlDbType.Int32) { DefaultValue = "1", NotNull = true },
                 new SqlColumn("region", MySqlDbType.VarChar) { DefaultValue = "", Length = 30, NotNull = true },
@@ -113,7 +113,7 @@ namespace Shop
                 new SqlColumn("onsale", MySqlDbType.VarChar) { DefaultValue = "", Length = 30, NotNull = true },
                 new SqlColumn("maxstock", MySqlDbType.Int32) { DefaultValue = "-1", Length = 30, NotNull = true }
                 ));
-            sqlcreator.EnsureExists(new SqlTable("storetrade",
+            sqlcreator.EnsureTableStructure(new SqlTable("storetrade",
                 new SqlColumn("ID", MySqlDbType.Int32) { Primary = true},
                 new SqlColumn("User", MySqlDbType.VarChar) { Length = 30 },
                 new SqlColumn("ItemID", MySqlDbType.Int32),
@@ -122,7 +122,7 @@ namespace Shop
                 new SqlColumn("WStack", MySqlDbType.Int32),
                 new SqlColumn("Active", MySqlDbType.Int32)
                 ));
-            sqlcreator.EnsureExists(new SqlTable("storeoffer",
+            sqlcreator.EnsureTableStructure(new SqlTable("storeoffer",
                 new SqlColumn("ID", MySqlDbType.Int32) { Primary = true },
                 new SqlColumn("User", MySqlDbType.VarChar) { Length = 30 },
                 new SqlColumn("ItemID", MySqlDbType.Int32),
@@ -379,10 +379,8 @@ namespace Shop
                 //display help as no item specificed | or too many params
                 if (args.Parameters.Count == 1 || args.Parameters.Count >= 6)
                 {
-                    args.Player.SendInfoMessage("Info: /trade add (item) (amount) [witem] [wamount]");
-                    args.Player.SendInfoMessage("Info: Set the item you wish to trade and the amount of them, optionally set the item you wish to trade for and the amount of them");
                     args.Player.SendInfoMessage("Info: /trade add (item) (amount) ({0})", SEconomyPlugin.Instance.Configuration.MoneyConfiguration.MoneyName);
-                    args.Player.SendInfoMessage("Info: Set the item you wish to trade, the amount of them and the amount of {0} you wish to exchange for.", SEconomyPlugin.Instance.Configuration.MoneyConfiguration.MoneyName);
+                    args.Player.SendInfoMessage("Example: /trade add \"copper sword\" 1 100");
                     return;
                 }
                 //Trading with minimum required amount of args
@@ -862,18 +860,17 @@ namespace Shop
                     args.Player.SendErrorMessage("Error: Invalid ID entered!");
                     return;
                 }
-                TradeObj obj = TradeList.TradeObjByID(id);
+                TradeObj obj = TradeList.TradeObjByID(id); 
                 if (obj == null)
                 {
                     args.Player.SendErrorMessage("Error: Incorrect ID entered!");
                     return;
                 }
-                if ((obj.User != args.Player.Name || !args.Player.Group.HasPermission("store.admin")) && obj.Active == 0)
+                if (args.Player.Name != obj.User || obj.Active == 0)
                 {
                     args.Player.SendErrorMessage("Error: You do not own this trade or trade has already been completed!");
                     return;
                 }
-                //all checks complete send trade back to collection queue
                 TradeList.cancelTrade(obj);
                 args.Player.SendInfoMessage("Info: Trade has been cancelled, please use /trade collect to reclaim your items.");
                 return;
@@ -952,7 +949,7 @@ namespace Shop
             }
             catch (Exception e)
             {
-                Log.ConsoleError(e.ToString());
+                TShock.Log.ConsoleError(e.ToString());
             }
         }
         //shop switch
@@ -1091,7 +1088,7 @@ namespace Shop
             }
             catch (Exception e)
             {
-                Log.ConsoleError(e.ToString());
+                TShock.Log.ConsoleError(e.ToString());
             }
         }
 
@@ -1226,7 +1223,7 @@ namespace Shop
                     }
                     catch (Exception)
                     {
-                        Log.ConsoleError("Shop Plugin: Error cannot locate region - {0}", region);
+                        TShock.Log.ConsoleError("Shop Plugin: Error cannot locate region - {0}", region);
                         return false;
                     }
                 }
@@ -1254,7 +1251,7 @@ namespace Shop
                     }
                     catch (Exception)
                     {
-                        Log.ConsoleError("Shop Plugin: Error cannot locate group - {0}", group);
+                        TShock.Log.ConsoleError("Shop Plugin: Error cannot locate group - {0}", group);
                         return false;
                     }
                 }
@@ -1306,14 +1303,14 @@ namespace Shop
                 }
                 else
                 {
-                    Log.ConsoleError("Shop config not found. Creating new one");
+                    TShock.Log.ConsoleError("Shop config not found. Creating new one");
                     configObj.Write(filepath);
                     return;
                 }
             }
             catch (Exception ex)
             {
-                Log.ConsoleError(ex.Message);
+                TShock.Log.ConsoleError(ex.Message);
                 return;
             }
         }

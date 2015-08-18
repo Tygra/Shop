@@ -30,35 +30,35 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Mono.Data.Sqlite">
-      <HintPath>..\refs\Mono.Data.Sqlite.dll</HintPath>
-    </Reference>
-    <Reference Include="MySql.Data">
-      <HintPath>..\refs\MySql.Data.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=4.0.2.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="Mono.Data.Sqlite, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\refs\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\..\tshock-4.3.8-rel\ServerPlugins\Mono.Data.Sqlite.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.9.6.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\tshock-4.3.8-rel\ServerPlugins\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\tshock-4.3.8-rel\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="TerrariaServer, Version=1.15.0.0, Culture=neutral, processorArchitecture=x86">
+    <Reference Include="TerrariaServer, Version=1.3.0.6, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <ExecutableExtension>.exe</ExecutableExtension>
-      <HintPath>..\refs\TerrariaServer.exe</HintPath>
+      <HintPath>..\..\..\tshock-4.3.8-rel\TerrariaServer.exe</HintPath>
     </Reference>
-    <Reference Include="TShockAPI, Version=4.2.2.218, Culture=neutral, processorArchitecture=x86">
+    <Reference Include="TShockAPI, Version=4.3.7.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\refs\TShockAPI.dll</HintPath>
+      <HintPath>..\..\..\tshock-4.3.8-rel\ServerPlugins\TShockAPI.dll</HintPath>
     </Reference>
-    <Reference Include="Wolfje.Plugins.SEconomy, Version=1.0.11.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Wolfje.Plugins.SEconomy, Version=1.0.21.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Source\Repos\cytoplugins2\CytoPlugins\Libraries\Wolfje.Plugins.SEconomy.dll</HintPath>
+      <HintPath>..\..\..\..\Downloads\seconomy-u21\Wolfje.Plugins.SEconomy.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
